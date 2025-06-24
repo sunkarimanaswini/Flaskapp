@@ -33,6 +33,7 @@ def index():
 if __name__ == '__main__':
     init_db()
     port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
 @app.route('/submissions')
 def submissions():
     with sqlite3.connect(DB_FILE) as conn:
@@ -40,4 +41,3 @@ def submissions():
         cursor.execute("SELECT name, email, message FROM submissions")
         records = cursor.fetchall()
     return render_template('submissions.html', records=records)
-    app.run(host='0.0.0.0', port=port)
