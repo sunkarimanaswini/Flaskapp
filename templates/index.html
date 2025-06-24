@@ -1,28 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Submitted Entries</title>
-</head>
-<body>
-    <h2>Submitted Contact Forms</h2>
-    <table border="1">
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Message</th>
-        </tr>
-        {% for name, email, message in records %}
-        <tr>
-            <td>{{ name }}</td>
-            <td>{{ email }}</td>
-            <td>{{ message }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <br>
-    <a href="/">Back to form</a>
-</body>
-</html>
-
+<form method="POST">
+    <label>Name:</label><br>
+    <input type="text" name="name" required><br>
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br>
+    <label>Message:</label><br>
+    <textarea name="message" required></textarea><br>
+    <button type="submit">Submit</button>
+</form>
 
