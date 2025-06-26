@@ -7,4 +7,35 @@ trigger:
 
 pool:
  name: flask
+ agent.name: flas
 
+stages:
+   - stage: "Test"
+     jobs:
+       - job: "Test"
+         steps:
+           - task: SonarQubePrepare@7
+             inputs:
+              SonarQube: 'sonarqube'
+              scannerMode: 'cli'
+              configMode: 'manual'
+              cliProjectKey: 'flask'
+              cliProjectName: 'flask'
+              cliSources: '.'
+           - task: SonarQubeAnalyze@7
+             inputs:
+                jdkversion: 'JAVA_HOME_17_X64'
+           - task: SonarQubePublish@7
+             inputs:
+                pollingTimeoutSec: '300'
+   - stage: "Build"
+     jobs:
+        - job: "Docker"
+          steps:
+            - task: Docker@2
+              inputs:
+                containerRegistry: 'container registry'
+                repository: 'flask'
+                command: 'buildAndPush'
+                Dockerfile: '**/Dockerfile'
+                tags: 'latest'
