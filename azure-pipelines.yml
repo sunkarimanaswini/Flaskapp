@@ -1,0 +1,10 @@
+trigger:
+  branches:
+    include:
+      - main
+    exclude:
+      - feature_branch
+
+pool:
+ name: flask
+
