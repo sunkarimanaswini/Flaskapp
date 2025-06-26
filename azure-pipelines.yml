@@ -18,7 +18,6 @@ stages:
              inputs:
                SonarQube: 'sonarqube'
                scannerMode: 'cli'
-               cliScannerVersion: '*'
                configMode: 'manual'
                cliProjectKey: 'flask'
                cliProjectName: 'flask'
