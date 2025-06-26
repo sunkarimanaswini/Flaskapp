@@ -17,11 +17,9 @@ stages:
            - task: SonarQubePrepare@7
              inputs:
                SonarQube: 'sonarqube'
-               scannerMode: 'cli'
-               configMode: 'manual'
-               cliProjectKey: 'flask'
-               cliProjectName: 'flask'
-               cliSources: '.'
+               scannerMode: 'dotnet'
+               projectKey: 'flask'
+               projectName: 'flask'
            - task: SonarQubeAnalyze@7
              inputs:
                jdkversion: 'JAVA_HOME_17_X64'
