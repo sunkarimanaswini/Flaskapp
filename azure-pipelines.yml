@@ -9,7 +9,6 @@ pool:
 
 stages:
    - stage: "Test"
-     condition: eq(variables['Build.SourceBranch'], 'refs/heads/main')
      jobs:
        - job: "Test"
          steps:
@@ -18,7 +17,7 @@ stages:
                SonarQube: 'sonarqube'
                scannerMode: 'cli'
                configMode: 'manual'
-               cliProjectKey: 'flask'
+               cliProjectKey: 'flask-app'
                cliProjectName: 'flask'
                cliSources: '.'
            - task: SonarQubeAnalyze@7
@@ -33,8 +32,17 @@ stages:
           steps:
             - task: Docker@2
               inputs:
-                containerRegistry: 'container registry'
+                containerRegistry: 'registry container'
                 repository: 'flask'
                 command: 'buildAndPush'
-                Dockerfile: '**/Dockerfile'
+                Dockerfile: './dockerfile'
                 tags: 'latest'
+            - task: CopyFiles@2
+              inputs:
+                Contents: 'aks-deployment'
+                TargetFolder: '$(Build.ArtifactStagingDirectory)'
+            - task: PublishBuildArtifacts@1
+              inputs:
+                PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+                ArtifactName: 'drop'
+                publishLocation: 'Container'
